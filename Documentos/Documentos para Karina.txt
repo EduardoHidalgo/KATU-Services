@@ -1,0 +1,16 @@
+Cartilla de Control de Citas
+	(con datos que propocionará kari)
+	(tipo libreta)
+
+Formatos de plan nutricional (son 3) mejorarlos conforme la estructura que karina ya definió.
+
+GRAFICA DE SEGUIMIENTO NUTRICIONAL
+cuadrícula de peso/tiempo
+	Elaborar en excel
+	me tienes que pasar los parámetros
+	EJE X - 40 hasta 150 / 5 hasta 55 (para niño)
+	EJE Y - sesiones (1, 2, 3...)
+
+Receta Médica para kari
+	Cambiar logo de doctora por el de kari
+

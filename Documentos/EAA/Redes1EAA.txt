@@ -1,0 +1,202 @@
+putty...
+
+modo privilgiado
+password cisco (colocar contraseña)
+password secr
+login (obligar a conectarse¨*solo en los puertos login)
+line vty 0 4 (proteger los puertos remotos desde el 0 al 4)
+do write (guardar)
+write(modo privilegiado)
+ctrl + c (para regresar)
+reload (reiniciar)
+
+*****CONFIGURACION DE TERMINAL PARA PC*****
+	
+Router>enable
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname cancun
+cancun(config)#enable password cisco
+cancun(config)#enable secret cisco
+The enable secret you have chosen is the same as your enable password.
+This is not recommended.  Re-enter the enable secret.
+cancun(config)#line console 0
+cancun(config-line)#password cisco
+cancun(config-line)#login
+cancun(config-line)#line vty 0 4
+cancun(config-line)#password cisco
+cancun(config-line)#login
+cancun(config-line)#do wr
+Building configuration...
+[OK]
+cancun(config-line)#
+cancun#
+
+reiniciar router : reload
+
+***** ROUTER 1 *****
+
+Password: 
+
+cancun>en
+Password: 
+cancun#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+cancun(config)#interface serial 0/0/0
+cancun(config-if)#clock rate 125000
+cancun(config-if)#clock rate ?
+Speed (bits per second
+  1200           
+  2400           
+  4800           
+  9600           
+  19200          
+  38400          
+  56000          
+  64000          
+  72000          
+  125000         
+  128000         
+  148000         
+  250000         
+  500000         
+  800000         
+  1000000        
+  1300000        
+  2000000        
+  4000000        
+  <300-4000000>  Choose clockrate from list above
+cancun(config-if)#ip address 192.168.12.1 255.255.255.128
+cancun(config-if)#no shutdown
+cancun(config-if)#interface serial 0/0/1
+cancun(config-if)#clock rate 125000
+cancun(config-if)#ip add 192.168.14.1 255.255.255.192
+cancun(config-if)#no shut
+cancun(config-if)#do wr
+Building configuration...
+[OK]
+cancun(config-if)#exit
+cancun(config)#router eigrp 10
+cancun(config-router)#network 192.168.12.0
+cancun(config-router)#network 192.168.14.0
+cancun(config-router)#no auto-summary
+cancun(config-router)#do wr
+Building configuration...
+[OK]
+cancun(config-router)#
+
+*****Router 2 *********
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#host chetumal
+chetumal(config)#enable secret cisco
+chetumal(config)#line console 0
+chetumal(config-line)#pass cisco
+chetumal(config-line)#login
+chetumal(config-line)#line vty 0 4
+chetumal(config-line)#
+chetumal(config-line)#
+chetumal(config-line)#pass cisco
+chetumal(config-line)#login
+chetumal(config-line)#int s 0/0/0
+chetumal(config-if)#ip add 192.168.12.2 255.255.255.128
+chetumal(config-if)#no shut
+
+chetumal(config-if)#
+%LINK-5-CHANGED: Interface Serial0/0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0/0, changed state to up
+
+chetumal(config-if)#exit
+chetumal(config)#router eigrp 10
+chetumal(config-router)#net 192.168.12.0
+chetumal(config-router)#
+chetumal(config-router)#no auto
+chetumal(config-router)#do wr
+Building configuration...
+[OK]
+chetumal(config-router)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 10: Neighbor 192.168.12.1 (Serial0/0/0) is up: new adjacency
+
+%DUAL-5-NBRCHANGE: IP-EIGRP 10: Neighbor 192.168.12.1 (Serial0/0/0) is down: Interface Goodbye received
+
+%DUAL-5-NBRCHANGE: IP-EIGRP 10: Neighbor 192.168.12.1 (Serial0/0/0) is up: new adjacency
+}
+****Router 3*******
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#host Playa
+Playa(config)#enable secret cisco
+Playa(config)#line console 0
+Playa(config-line)#pass cisco
+Playa(config-line)#login
+Playa(config-line)#line vty 0 4
+Playa(config-line)#pass cisco
+Playa(config-line)#login
+Playa(config-line)#int ?
+% Unrecognized command
+Playa(config-line)#int s 0/0/1
+Playa(config-if)#ip add 192.168.14.2 255.255.255.192
+Playa(config-if)#no shut
+
+Playa(config-if)#
+%LINK-5-CHANGED: Interface Serial0/0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0/1, changed state to up
+
+Playa(config-if)#exit
+Playa(config)#router eigrp 10
+Playa(config-router)#net 192.168.14.0
+Playa(config-router)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 10: Neighbor 192.168.14.1 (Serial0/0/1) is up: new adjacency
+
+Playa(config-router)#no auto
+Playa(config-router)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 10: Neighbor 192.168.14.1 (Serial0/0/1) is up: new adjacency
+
+Playa(config-router)#do wr
+Building configuration...
+[OK]
+Playa(config-router)#
+Playa(config-router)#
+Playa#
+%SYS-5-CONFIG_I: Configured from console by console
+
+Playa#
+Playa#
+Playa#sh ip route
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     192.168.12.0/25 is subnetted, 1 subnets
+D       192.168.12.0 [90/2681856] via 192.168.14.1, 00:01:51, Serial0/0/1
+     192.168.14.0/26 is subnetted, 1 subnets
+C       192.168.14.0 is directly connected, Serial0/0/1
+Playa#telnet 192.168.12.2 chetumal
+                          ^
+% Invalid input detected at '^' marker.
+	
+Playa#telnet 192.168.12.2 Chetumal
+                          ^
+% Invalid input detected at '^' marker.
+	
+Playa#telnet 192.168.12.2
+Trying 192.168.12.2 ...Open
+
+
+User Access Verification
+
+Password: 
+chetumal>exit
+
+[Connection to 192.168.12.2 closed by foreign host]
+Playa#
